@@ -19,7 +19,10 @@ const upload = multer({
 
 
 const JWKS = createRemoteJWKSet(
-  new URL("http://localhost:3000/api/auth/jwks")
+  new URL(
+    process.env.JWKS_URL ||
+    "http://localhost:3000/api/auth/jwks"
+  )
 );
 
 const verifyToken = async (req, res, next) => {
@@ -44,7 +47,9 @@ const verifyToken = async (req, res, next) => {
 
 
 const app = express();
-const PORT = 5000;
+// const PORT = 5000;
+
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
